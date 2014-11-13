@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.Stack;\
+\
+public class Lab1 \{\
+	/*\
+	 * @author \ul Brett\ulnone  \ul Koenig\ulnone \
+	 * @date 2/11/13\
+	 * Sort an input of integers, in ascending order, using three stacks\
+	 * @param inputTrack Stack of input values to sort\
+	 * @return Stack of values from input in sorted order\
+	 */\
+	/*\
+	 * This function takes in the input and determines if it is null, and sorts the input if it is not null\
+	 */\
+	public static Stack<Integer> trainSort(Stack<Integer> inputTrack)\
+	\{\
+\pard\pardeftab720
+\cf0 \ul \ulc0 int\ulnone  counter = 1;\
+\pard\pardeftab720\ri720
+\cf0 Stack<Integer> sideTrack = new Stack<Integer>();\
+Stack<Integer> exitTrack = new Stack<Integer>();\
+if(inputTrack == null)\
+\{\
+	return sideTrack;\
+\}\
+while(!inputTrack.empty())\
+\{\
+\pard\pardeftab720\fi720\ri720
+\cf0 \ul \ulc0 int\ulnone  first = inputTrack.pop();\
+if((exitTrack.empty() && (inputTrack.empty() || first <= inputTrack.peek())))\
+\pard\pardeftab720\ri720
+\cf0 	\{\
+		exitTrack.push(first);\
+		System.out.println(counter + ".\\tMove " + first + " from input to exit");\
+		counter++;\
+	\}\
+	else if(exitTrack.empty())\
+	\{\
+		if(!sideTrack.empty() && first > sideTrack.peek())\
+		\{\
+			while (!sideTrack.empty() && first > sideTrack.peek())\
+			\{\
+				\ul int\ulnone  second = sideTrack.pop();\
+				exitTrack.push(second);\
+				System.out.println(counter + ".\\tMove " + second + " from siding to exit");\
+				counter++;\
+			\}\
+		\}\
+		sideTrack.push(first);\
+		System.out.println(counter + ".\\tMove " + first + " from input to siding");\
+		counter++;\
+	\}\
+	else if(first >= exitTrack.peek() && (sideTrack.empty()||first <= sideTrack.peek()))\
+	\{\
+		exitTrack.push(first);\
+		System.out.println(counter + ".\\tMove " + first + " from input to exit");\
+		counter++;\
+\pard\pardeftab720\fi720\ri720
+\cf0 \}\
+\pard\pardeftab720\ri720
+\cf0 	else if(first < exitTrack.peek())\
+	\{\
+		while(!exitTrack.empty() && first < exitTrack.peek())\
+		\{\
+			\ul int\ulnone  second = exitTrack.pop();\
+			if(sideTrack.empty() || second <= sideTrack.peek())\
+			\{\
+				sideTrack.push(second);\
+				System.out.println(counter + ".\\tMove " + second + " from exit to siding");\
+				counter++;\
+			\}\
+			else\
+			\{\
+				inputTrack.push(second);\
+				System.out.println(counter + ".\\tMove " + second + " from exit to input");\
+				counter++;\
+			\}\
+		\}\
+		exitTrack.push(first);\
+		System.out.println(counter + ".\\tMove " + first + " from input to exit");\
+		counter++;\
+	\}\
+	else if(first > sideTrack.peek())\
+	\{\
+		while(!sideTrack.empty() && first > sideTrack.peek())\
+		\{\
+			\ul int\ulnone  second = sideTrack.pop();\
+			if (second >= exitTrack.peek())\
+			\{\
+				exitTrack.push(second);\
+				System.out.println(counter + ".\\tMove " + second + " from siding to exit");\
+				counter++;\
+			\}\
+			else\
+			\{\
+				inputTrack.push(second);\
+\pard\pardeftab720\li2160\fi720\ri720
+\cf0 System.out.println(counter + ".\\tMove " + second + " from siding to input");\
+\pard\pardeftab720\ri720
+\cf0 				counter++;\
+			\}\
+		\}\
+		sideTrack.push(first);\
+		System.out.println(counter + ".\\tMove " + first + " from input to siding");\
+		counter++;\
+	\}\
+\}\
+while(!sideTrack.empty())\
+\{\
+\pard\pardeftab720\fi720\ri720
+\cf0 \ul \ulc0 int\ulnone  first = sideTrack.pop();\
+\pard\pardeftab720\ri720
+\cf0 	exitTrack.push(first);\
+	System.out.println(counter + ".\\tMove " + first + " from siding to exit");\
+	counter++;\
+\}\
+return exitTrack;\
+\}\
+}
